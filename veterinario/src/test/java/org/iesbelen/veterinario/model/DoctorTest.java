@@ -14,7 +14,7 @@ public class DoctorTest {
 
      @Test
     void test1() {
-        Doctor doctor = new Doctor(0, "Charlie", "Edokpa", "Aigbiremhon", "MALAGA", new Date(111), "charlieedokpa@gmail.com", "632110766", null, false, null,null);
+        Doctor doctor = new Doctor(0, "Charlie", "Edokpa", "Aigbiremhon", "MALAGA", new Date(111), "charlieedokpa@gmail.com", "632110766", null, false, null,null,null);
         repository.save(doctor);
     }
 

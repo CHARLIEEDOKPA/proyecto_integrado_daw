@@ -2,9 +2,7 @@ package org.iesbelen.veterinario.controllers;
 
 import java.util.List;
 
-import org.iesbelen.veterinario.model.Duenyo;
 import org.iesbelen.veterinario.model.Mascota;
-import org.iesbelen.veterinario.repo.DuenyoRepository;
 import org.iesbelen.veterinario.services.MascotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +20,9 @@ public class MascotaController {
     @Autowired
     private MascotaService mascotaService;
 
-    @Autowired
-    private DuenyoRepository duenyoRepository;
-
     @GetMapping("all")
-    public ResponseEntity<List<Duenyo>> getMethodName() {
-        return new ResponseEntity<List<Duenyo>>(duenyoRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Mascota>> getMethodName() {
+        return new ResponseEntity<List<Mascota>>(mascotaService.getMascotas(), HttpStatus.OK);
     }
 
 }

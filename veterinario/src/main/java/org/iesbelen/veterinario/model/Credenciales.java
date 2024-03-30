@@ -1,11 +1,5 @@
 package org.iesbelen.veterinario.model;
 
-import java.sql.Date;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,26 +15,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "incidencia",
+    name = "credenciales",
     schema = "veterinario_proyecto_integrado"
 )
-public class Incidencia {
+public class Credenciales {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @CreationTimestamp
-    @Column(nullable = false)
-    private Date fecha;
-    @JsonIgnore
-    @Column(nullable = false)
-    private long id_mascota;
-    @JsonIgnore
-    @Column(nullable = false)
-    private long id_doctor;
-    @Column(nullable = false,length = 1500)
-    private String observaciones;
 
+    @Column(nullable = false)
+    private String email;
 
+    @Column(nullable = false, length = 13)
+    private String rol;
+
+    @Column(nullable = false)
+    private String contrasenya;
+
+    @Column(nullable = false)
+    private long id_doctor_duenyo;
 
 }
