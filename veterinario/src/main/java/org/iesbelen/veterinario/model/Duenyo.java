@@ -39,7 +39,7 @@ public class Duenyo {
     @Column(nullable = false, length = 50)
     private String apellidos1;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     private String apellidos2;
 
     @Column(nullable = false)
@@ -48,7 +48,7 @@ public class Duenyo {
     @Column(nullable = false)
     private Date nacimiento;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, length = 9)

@@ -1,5 +1,7 @@
 package org.iesbelen.veterinario.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,16 +22,18 @@ import lombok.NoArgsConstructor;
 )
 public class Credenciales {
     
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, length = 13)
     private String rol;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String contrasenya;
 

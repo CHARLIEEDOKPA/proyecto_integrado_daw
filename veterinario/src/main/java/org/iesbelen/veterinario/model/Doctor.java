@@ -41,7 +41,7 @@ public class Doctor {
     private String residencia;
     @Column(nullable = false)
     private Date nacimiento;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, length = 9)
     private String telefono;
