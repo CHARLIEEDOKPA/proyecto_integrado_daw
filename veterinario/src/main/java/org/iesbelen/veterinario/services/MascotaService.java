@@ -1,6 +1,7 @@
 package org.iesbelen.veterinario.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.iesbelen.veterinario.model.Mascota;
 import org.iesbelen.veterinario.repo.MascotaRepository;
@@ -15,6 +16,10 @@ public class MascotaService {
 
      public List<Mascota> getMascotas() {
         return mascotaRepository.findAll();
+     }
+
+     public Optional<Mascota> getMascotaById(long id) {
+      return mascotaRepository.findById(id);
      }
 
 }
