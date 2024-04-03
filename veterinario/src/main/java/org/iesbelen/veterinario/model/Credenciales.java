@@ -27,6 +27,7 @@ public class Credenciales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonIgnore
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -37,6 +38,7 @@ public class Credenciales {
     @Column(nullable = false)
     private String contrasenya;
 
+    @JsonIgnore
     @Column(nullable = false)
     private long id_doctor_duenyo;
 

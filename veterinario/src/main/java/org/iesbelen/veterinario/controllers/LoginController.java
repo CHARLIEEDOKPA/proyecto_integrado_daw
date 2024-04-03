@@ -44,7 +44,7 @@ public class LoginController {
     private DoctorService doctorService;
     
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody UserPassword userPassword, HttpSession httpSession) {
+    public ResponseEntity<Credenciales> login(@RequestBody UserPassword userPassword, HttpSession httpSession) {
         Optional<Credenciales> opt = credencialesService.findCredencialByEmail(userPassword);
         if (opt.isPresent()) {
             Credenciales credenciales = opt.get();
@@ -62,7 +62,7 @@ public class LoginController {
                         httpSession.setAttribute("user-data", doctor) ;
                     }
                 }
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(credenciales,HttpStatus.OK);
             }
         } 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
