@@ -1,13 +1,5 @@
 package org.iesbelen.veterinario.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.Optional;
 
 import org.iesbelen.veterinario.model.Credenciales;
@@ -19,11 +11,13 @@ import org.iesbelen.veterinario.services.DoctorService;
 import org.iesbelen.veterinario.services.DuenyoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -50,18 +44,7 @@ public class LoginController {
             Credenciales credenciales = opt.get();
             boolean loggedCorrectly = credenciales.getContrasenya().equals(userPassword.getContrasenya());
             if (loggedCorrectly) {
-                httpSession.setAttribute("usuario", credenciales);
-                String rol = credenciales.getRol();
-                switch (rol) {
-                    case "duenyo" ->  {
-                        Duenyo duenyo = duenyoService.getDuenyoById(credenciales.getId_doctor_duenyo()).get();
-                        httpSession.setAttribute("user-data", duenyo) ;
-                    }
-                    case "doctor" -> {
-                        Doctor doctor =  doctorService.getDoctorById(credenciales.getId_doctor_duenyo()).get();
-                        httpSession.setAttribute("user-data", doctor) ;
-                    }
-                }
+                httpSession.setAttribute("usuario", credenciales);        
                 return new ResponseEntity<>(credenciales,HttpStatus.OK);
             }
         } 
