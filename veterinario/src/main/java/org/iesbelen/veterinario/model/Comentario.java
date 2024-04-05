@@ -1,14 +1,10 @@
 package org.iesbelen.veterinario.model;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,26 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "cita",
+    name = "comentario",
     schema = "veterinario_proyecto_integrado"
 )
-public class Cita {
+public class Comentario {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private Time time;
-    @Column(nullable = false)
-    private Date date;
-
-    @Column(nullable = false)
-    private long id_doctor;
-    
-    @Column(nullable = false)
-    private long id_mascota;
-
-
+    @Column(nullable = false, length = 500)
+    private String texto;
 
 }
