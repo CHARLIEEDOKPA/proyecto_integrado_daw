@@ -65,4 +65,9 @@ public class IncidenciaService {
         return false;
     }
 
+    public boolean rolIsEmptyOrNull(IncidenciaRequest incidenciaRequest) {
+        String rol = incidenciaRequest.getRol();
+        return rol == null || rol.length() == 0;
+    }
+
 }

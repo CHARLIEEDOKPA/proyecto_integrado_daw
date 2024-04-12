@@ -52,14 +52,12 @@ public class IncidenciaController {
 
         return new ResponseEntity<List<Incidencia>>(HttpStatus.UNAUTHORIZED);
     }
-
     @PostMapping("add")
     public ResponseEntity<Incidencia> postMethodName(@RequestBody @Valid IncidenciaRequest incidenciaRequest,
             BindingResult bindingResult, HttpSession httpSession) {
         Credenciales credenciales = (Credenciales) httpSession.getAttribute("usuario");
-
         if (credenciales != null) {
-            boolean hasError = bindingResult.hasFieldErrors();
+            boolean hasError = bindingResult.hasErrors();
 
             if (hasError) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -80,7 +78,8 @@ public class IncidenciaController {
 
     @ExceptionHandler(InvalidFormatException.class)
     
-    public ResponseEntity<String> invalidFormatException() {
+    public ResponseEntity<String> invalidFormatException(BindingResult bindingResult) {
+
         return new ResponseEntity<>("Invalid Format", HttpStatus.BAD_REQUEST);
     } 
 

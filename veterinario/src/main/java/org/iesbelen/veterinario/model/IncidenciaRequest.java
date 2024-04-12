@@ -17,13 +17,13 @@ public class IncidenciaRequest {
 
 
     @NotNull
-    private long id_mascota;
+    private Long id_mascota;
 
     @NotBlank
     @NotNull
     private String observaciones;
 
-    @NotNull
+    @NotNull(message = "El rol no tiene que estar")
     @NotBlank
     private String rol;
 }
