@@ -19,9 +19,6 @@ public class RecomendacionRequest {
     @NotBlank
     private String sobre;
     @NotNull
-    @NotBlank
-    private String rol;
-    @NotNull
     private long id_mascota;
 
 }

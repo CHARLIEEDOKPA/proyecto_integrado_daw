@@ -24,7 +24,7 @@ public class MascotaTest {
     @Test
     void test1() {
 
-        Mascota mascota = new Mascota(0, "Firulais", new Date(11), "macho",3,1, false,null,null,null);
+        Mascota mascota = new Mascota(0, "Firulais", new Date(11), "macho",3,5, false,null,null,null);
         mascotaRepository.save(mascota);
     }
 }

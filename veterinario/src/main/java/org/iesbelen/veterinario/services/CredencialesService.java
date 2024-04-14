@@ -5,12 +5,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
+import org.iesbelen.veterinario.model.AuthResponse;
 import org.iesbelen.veterinario.model.Credenciales;
 import org.iesbelen.veterinario.model.Doctor;
 import org.iesbelen.veterinario.model.Duenyo;
+import org.iesbelen.veterinario.model.RegisterRequest;
 import org.iesbelen.veterinario.model.UserPassword;
 import org.iesbelen.veterinario.repo.CredencialesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +24,16 @@ public class CredencialesService {
     
     @Autowired
     private CredencialesRepository credencialesRepository;
+
+	@Autowired
+	private JwtService jwtService;
+
+	@Autowired
+	private AuthenticationManager auth;
+
+	@Autowired
+    PasswordEncoder passwordEncoder;
+
 
 	public void addDoctorCredencial(Doctor doctor) {
 		Credenciales credenciales =  new Credenciales();
@@ -37,38 +53,29 @@ public class CredencialesService {
 		credencialesRepository.save(credenciales);
 	}
 
-	public Optional<Credenciales> findCredencialByEmail(UserPassword userPassword){
-		return credencialesRepository.getCredencialesByEmail(userPassword.getEmail());
+	public void addCredencial(Credenciales c) {
+		credencialesRepository.save(c);
 	}
 
-    public boolean loginCorrect(UserPassword userPassword) {
-        Optional<Credenciales> opt = credencialesRepository.getCredencialesByEmail(userPassword.getEmail());
-        return opt.isPresent() && opt.get().getContrasenya().
-        equals(userPassword.getContrasenya());
-    }
+	public Credenciales buildCredencial(RegisterRequest registerRequest, long id, String rol) {
+		return Credenciales.builder()
+		.email(registerRequest.getEmail())
+		.contrasenya(passwordEncoder.encode("iesbelen"))
+		.id_doctor_duenyo(id)
+		.rol(rol)
+		.build();
+	 }
 
-    public static String hashPassword(String password ) throws NoSuchAlgorithmException {
-		MessageDigest digest;
-		
-		digest = MessageDigest.getInstance("SHA-256");
-		byte[] encodedhash = digest.digest(
-				password.getBytes(StandardCharsets.UTF_8));
-		
-		return bytesToHex(encodedhash);					
+	public Optional<Credenciales> findCredencialByEmail(String email){
+		return credencialesRepository.getCredencialesByEmail(email);
 	}
-	
-	private static String bytesToHex(byte[] byteHash) {
-		
-	    StringBuilder hexString = new StringBuilder(2 * byteHash.length);	  	
-	    for (int i = 0; i < byteHash.length; i++) {
-	        String hex = Integer.toHexString(0xff & byteHash[i]);
-	        if (hex.length() == 1) {
-	            hexString.append('0');
-	        }
-	        hexString.append(hex);
-	    }
-	    
-	    return hexString.toString();
+
+
+    public AuthResponse login(UserPassword userPassword) {
+		  auth.authenticate(new UsernamePasswordAuthenticationToken(userPassword.getEmail(), userPassword.getContrasenya()));
+		UserDetails user = credencialesRepository.getCredencialesByEmail(userPassword.getEmail()).orElseThrow();
+		String token = jwtService.getToken(user);
+		return new AuthResponse(token);
 	}
 
 }

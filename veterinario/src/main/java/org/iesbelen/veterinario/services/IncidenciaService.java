@@ -10,6 +10,8 @@ import org.iesbelen.veterinario.repo.IncidenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+
 @Service
 public class IncidenciaService {
 
@@ -68,6 +70,23 @@ public class IncidenciaService {
     public boolean rolIsEmptyOrNull(IncidenciaRequest incidenciaRequest) {
         String rol = incidenciaRequest.getRol();
         return rol == null || rol.length() == 0;
+    }
+
+    public Incidencia buildIncidencia(@Valid IncidenciaRequest incidenciaRequest, Long id) {
+        Optional<Mascota> opt = mascotaService.getMascotaById(incidenciaRequest.getId_mascota());
+        if (opt.isPresent()) {
+            Mascota mascota = opt.get();
+            return !id.equals(mascota.getId_duenyo()) ? null : Incidencia.builder()
+                                                                .id_doctor(mascota.getId_doctor())
+                                                                .id_mascota(mascota.getId())
+                                                                .observaciones(incidenciaRequest.getObservaciones())
+                                                                .build();
+        }
+        return null;
+    }
+
+    public Incidencia addIncidencia(Incidencia incidencia) {
+        return incidenciaRepository.save(incidencia);
     }
 
 }

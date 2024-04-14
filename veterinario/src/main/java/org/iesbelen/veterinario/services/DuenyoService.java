@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.iesbelen.veterinario.model.Duenyo;
+import org.iesbelen.veterinario.model.RegisterRequest;
 import org.iesbelen.veterinario.repo.DuenyoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,19 @@ public class DuenyoService {
         }
         return false;
     }
+
+    public Duenyo buildDuenyo(RegisterRequest registerRequest) {
+        return Duenyo.builder().activo(true)
+        .nombre(registerRequest.getNombre())
+        .apellidos1(registerRequest.getApellidos1())
+        .apellidos2(registerRequest.getApellidos2())
+        .email(registerRequest.getEmail())
+        .nacimiento(registerRequest.getNacimiento())
+        .residencia(registerRequest.getResidencia())
+        .telefono(registerRequest.getTelefono())
+        .build();
+    }
+
 
     public boolean modifyDuenyo(Long id, Duenyo duenyo) {
         Optional<Duenyo> opt = duenyoRepository.findById(id);
