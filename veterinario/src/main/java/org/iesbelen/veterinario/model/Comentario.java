@@ -6,11 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,7 +28,16 @@ public class Comentario {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank
     @Column(nullable = false, length = 500)
     private String texto;
+
+    @NotNull
+    private Long id_duenyo;
+
+    @NotNull
+    private Long id_publicacion;
+
+    
 
 }

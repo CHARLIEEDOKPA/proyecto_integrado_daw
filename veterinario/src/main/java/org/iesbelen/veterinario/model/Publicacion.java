@@ -2,6 +2,8 @@ package org.iesbelen.veterinario.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,9 +37,16 @@ public class Publicacion {
     @Column(nullable = true, length = 1000)
     private String descripcion;
 
+    @JsonIgnore
+    private long id_duenyo;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_publicacion",referencedColumnName = "id")
     private List<MeGusta> megustas;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_publicacion",referencedColumnName = "id")
+    private List<Comentario> comentarios;
 
     
 
